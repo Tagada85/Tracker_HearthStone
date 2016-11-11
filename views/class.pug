@@ -1,0 +1,7 @@
+extends layout
+
+block content
+	div
+		h1=character.name
+		img(src='/images/' + character.image)
+		p=character.description

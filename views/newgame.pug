@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	div 
+		h1 Add a new game
+		form(action='/newgame' method='POST')
+			label(for='classPlayed') Your Class:
+			select(id='classPlayed')
+				each character in characters
+					option(value=character.name)=character.name
+			label(for='classOpponent') Opponent's Class:
+			select(id='classOpponent')
+				each character in characters
+					option(value=character.name)=character.name
+			label(for='deckUsed') Deck Used:
+			select(id='deckUsed')
+				each deck in decks
+					option(value=deck.deckName)=deck.deckName
+			input(type='radio' name='outcome' value='win' id='win')
+			label(for='win') Win
+			input(type='radio' name='outcome' value='loss' id='loss')
+			label(for='loss') Loss
+			input(type='submit' value='Save New Game')

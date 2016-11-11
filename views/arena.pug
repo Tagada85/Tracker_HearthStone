@@ -1,0 +1,21 @@
+extends layout
+
+block content
+	div
+		h1 Your arena runs
+		if msg
+			p.message=msg
+			form(method='POST' action='/arena')
+			label(for='classPlayed') Class Played
+			select(name='classPlayed' id='classPlayed')
+				each character in characters
+					option(value=character.className)=character.className
+			label(for='wins') Number of Wins:
+			input(type='number' min='0' id='wins' name='wins')
+			input(type='submit' value='Save Arena Run')
+	div
+		h3 Your latest Runs
+		each run in runs
+			p Number of wins: #{run.numberOfWins}
+			p Class Played: #{run.classPlayed}
+			p Date: #{run.date}

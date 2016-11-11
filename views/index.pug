@@ -1,0 +1,15 @@
+extends layout
+
+block content
+	h2.text-center Welcome to Hearthstone Tracker
+	p.text-center.desc-index This application allows you to records your Hearthstone games, including your arena runs. You can login with GitHub, Twitter and Gmail. Made with Node.JS, Express, MongoDB, Pug and of course, lots of love. Have fun!
+	div.jumbotron
+		h4 Meet your Heroes:
+		each character in characters
+			div.col-sm-4.text-center
+				h4
+					a(href='/class/' + character.name)=character.name
+				img(src='/images/' + character.image)
+				p=character.className
+				br
+				br
