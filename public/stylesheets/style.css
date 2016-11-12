@@ -13,4 +13,24 @@ a {
 .desc-index {
   font-size: 20px; }
 
+.new-game-form {
+  width: 40%;
+  margin-right: 2%; }
+
+.latest-games {
+  width: 45%;
+  margin-left: 2%; }
+
+.message {
+  font-size: 25px;
+  color: darkblue; }
+
+.red {
+  color: red;
+  font-size: 18px; }
+
+.blue {
+  color: blue;
+  font-size: 18px; }
+
 /*# sourceMappingURL=style.css.map */

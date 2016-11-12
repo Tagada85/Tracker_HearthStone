@@ -3,3 +3,18 @@ extends layout
 block content
 	div
 		h1 Decks Page
+		if message
+			p.message.text-center=message
+		form(action='/decks' method='POST')
+			.form-group
+				label(for='className') Class Name:
+				select#className.form-control(name='classDeck')
+					each character in characters
+						option(value=character.className)=character.className
+			.form-group
+				label(for='deckName') Name of the Deck:
+				input(type="text" id='deckName' name='deckName').form-control
+			.form-group
+				label(for="description") Deck Description:
+				textarea#description(name='description').form-control
+			input(type='submit' value='Save Deck').btn-lg.btn-info

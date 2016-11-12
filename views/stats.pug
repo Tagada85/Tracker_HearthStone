@@ -3,3 +3,183 @@ extends layout
 block content
 	div
 		h1 Statistics Page
+		h3 Pick your filters:
+		form(action='/stats' method='POST')
+			label(for='classPlayed') By Class:
+			select(id='classPlayed' name='classPlayed')
+				each character in characters
+					option(value=character.className)=character.className
+			input(type='hidden' value='true' name='filterIsClass')
+			input(type='submit' value='Go').btn.btn-info#class-filter
+		form(action='/stats' method='GET')
+			label(for='deckUsed') By Deck:
+			select(id='deckUsed' name='deckUsed')
+				each deck in decks
+					option(value=deck.deckName)=deck.deckName
+			input(type='submit' value='Go').btn.btn-info#deck-filter
+		table.table.table-striped
+			if filtered
+				tr
+					th
+					th Wins
+					th Losses
+					th %
+				tbody
+					tr
+						td vs Mage
+						td#mageWins
+						td#mageLosses
+						td#magePercent
+					tr
+						td vs Hunter
+						td#hunterWins
+						td#hunterLosses
+						td#hunterPercent
+					tr
+						td vs Paladin
+						td#paladinWins
+						td#paladinLosses
+						td#paladinPercent
+					tr
+						td vs Priest
+						td#priestWins
+						td#priestLosses
+						td#priestPercent
+					tr
+						td vs Warlock
+						td#warlockWins
+						td#warlockLosses
+						td#warlockPercent
+					tr
+						td vs Shaman
+						td#shamanWins
+						td#shamanLosses
+						td#shamanPercent
+					tr
+						td vs Rogue
+						td#rogueWins
+						td#rogueLosses
+						td#roguePercent
+					tr
+						td vs Druid
+						td#druidWins
+						td#druidLosses
+						td#druidPercent
+					tr
+						td vs Warrior
+						td#warriorWins
+						td#warriorLosses
+						td#warriorPercent
+
+		script.
+			let mageWins = 0, mageLosses = 0, warriorWins = 0, warriorLosses = 0, shamanWins = 0,
+			shamanLosses = 0, druidWins = 0, druidLosses = 0, rogueWins = 0, rogueLosses = 0,
+			warlockWins = 0, warlockLosses = 0, paladinWins = 0, paladinLosses = 0, hunterWins = 0,
+			hunterLosses = 0, priestWins = 0, priestLosses = 0;
+
+
+
+			let games = !{JSON.stringify(filtered)};
+			games.map( game => {
+				let opponent = game.classOpponent;
+				switch(opponent){
+					case 'Mage':
+						if(game.outcome == 'win'){
+							mageWins++;
+						}else{
+							mageLosses++;
+						}
+						break;
+					case 'Warrior':
+						if(game.outcome == 'win'){
+							warriorWins++;
+						}else{
+							warriorLosses++;
+						}
+						break;
+					case 'Shaman':
+						if(game.outcome == 'win'){
+							shamanWins++;
+						}else{
+							shamanLosses++;
+						}
+						break;
+					case 'Druid':
+						if(game.outcome == 'win'){
+							druidWins++;
+						}else{
+							druidLosses++;
+						}
+						break;
+					case 'Rogue':
+						if(game.outcome == 'win'){
+							rogueWins++;
+						}else{
+							rogueLosses;
+						}
+						break;
+					case 'Warlock':
+						if(game.outcome == 'win'){
+							warlockWins++;
+						}else{
+							warlockLosses++;
+						}
+						break;
+					case 'Paladin':
+						if(game.outcome == 'win'){
+							paladinWins++;
+						}else{
+							paladinLosses++;
+						}
+						break;
+					case 'Hunter':
+						if(game.outcome == 'win'){
+							hunterWins++;
+						}else{
+							hunterLosses++;
+						}
+						break;
+					case 'Priest':
+						if(game.outcome == 'win'){
+							priestWins++;
+						}else{
+							priestLosses++;
+						}
+						break;
+				}
+			});
+			document.getElementById('mageWins').innerHTML = mageWins;
+			document.getElementById('mageLosses').innerHTML = mageLosses;
+			document.getElementById('magePercent').innerHTML = (mageWins / (mageWins + mageLosses)) * 100;
+
+			document.getElementById('paladinWins').innerHTML = paladinWins;
+			document.getElementById('paladinLosses').innerHTML = paladinLosses;
+			document.getElementById('paladinPercent').innerHTML = paladinWins / (paladinWins + paladinLosses);
+
+			document.getElementById('hunterWins').innerHTML = hunterWins || 0;
+			document.getElementById('hunterLosses').innerHTML = hunterLosses;
+			document.getElementById('hunterPercent').innerHTML = hunterWins / (hunterWins + hunterLosses);
+
+			document.getElementById('priestWins').innerHTML = priestWins;
+			document.getElementById('priestLosses').innerHTML = priestLosses;
+			document.getElementById('priestPercent').innerHTML = priestWins / (priestWins + priestLosses);
+
+			document.getElementById('rogueWins').innerHTML = rogueWins;
+			document.getElementById('rogueLosses').innerHTML = rogueLosses;
+			document.getElementById('roguePercent').innerHTML = rogueWins / (rogueWins + rogueLosses);
+
+			document.getElementById('warlockWins').innerHTML = warlockWins;
+			document.getElementById('warlockLosses').innerHTML = warlockLosses;
+			document.getElementById('warlockPercent').innerHTML = warlockWins / (warlockWins + warlockLosses);
+
+			document.getElementById('druidWins').innerHTML = druidWins;
+			document.getElementById('druidLosses').innerHTML = druidLosses;
+			document.getElementById('druidPercent').innerHTML = druidWins / (druidWins + druidLosses);
+
+			document.getElementById('shamanWins').innerHTML = shamanWins;
+			document.getElementById('shamanLosses').innerHTML = shamanLosses;
+			document.getElementById('shamanPercent').innerHTML = shamanWins / (shamanWins + shamanLosses);
+
+			document.getElementById('warriorWins').innerHTML = warriorWins;
+			document.getElementById('warriorLosses').innerHTML = warriorLosses;
+			document.getElementById('warriorPercent').innerHTML = warriorWins / (warriorWins + warriorLosses);

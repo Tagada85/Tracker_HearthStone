@@ -1,23 +1,42 @@
 extends layout
 
 block content
-	div 
-		h1 Add a new game
-		form(action='/newgame' method='POST')
-			label(for='classPlayed') Your Class:
-			select(id='classPlayed')
-				each character in characters
-					option(value=character.name)=character.name
-			label(for='classOpponent') Opponent's Class:
-			select(id='classOpponent')
-				each character in characters
-					option(value=character.name)=character.name
-			label(for='deckUsed') Deck Used:
-			select(id='deckUsed')
-				each deck in decks
-					option(value=deck.deckName)=deck.deckName
-			input(type='radio' name='outcome' value='win' id='win')
-			label(for='win') Win
-			input(type='radio' name='outcome' value='loss' id='loss')
-			label(for='loss') Loss
-			input(type='submit' value='Save New Game')
+	div
+		h1.text-center Add a new game
+		if message
+			p.message.text-center=message
+		form(action='/newgame' method='POST').new-game-form.pull-left
+			.form-group
+				label(for='classPlayed') Your Class:
+				select(id='classPlayed' name="classPlayed").form-control
+					each character in characters
+						option(value=character.className)=character.className
+			.form-group
+				label(for='classOpponent') Opponent's Class:
+				select(id='classOpponent' name="classOpponent").form-control
+					each character in characters
+						option(value=character.className)=character.className
+			.form-group
+				label(for='deckUsed') Deck Used:
+				select(id='deckUsed' name="deckUsed").form-control
+					each deck in decks
+						option(value=deck.deckName)=deck.deckName
+			.form-group
+				label Outcome
+				.input-group
+					span.input-group-addon
+						input(type='radio' name='outcome' value='win' id='win')
+						label(for='win') Win &nbsp;&nbsp;
+					span.input-group-addon
+						input(type='radio' name='outcome' value='loss' id='loss')
+						label(for='loss') Loss
+			input(type='submit' value='Save New Game').btn-lg.btn-info
+		.latest-games.pull-left.text-center
+			h2 Your latest Games
+			each game in records
+				p #{game.classPlayed} vs #{game.classOpponent}
+					if game.outcome == 'win'
+						b.blue  #{game.outcome}&nbsp;
+					else
+						b.red  #{game.outcome}&nbsp;
+					with #{game.deckUsed.deckName}
